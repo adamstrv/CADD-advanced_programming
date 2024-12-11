@@ -30,7 +30,7 @@ def extract_data(test_csv_path, train_csv_path):
         # Remove any whitespace from line and split the line based on comma's.
         values = line.strip().split(',')
         # The SMILES string is the first element of the list made of split line
-        smiles = values[0]
+        smiles = values[0].strip('"')
         # Classification is the second element
         binary_classification = int(values[1].strip('"'))
         
@@ -53,6 +53,10 @@ def extract_data(test_csv_path, train_csv_path):
     for line in test_lines[1:]:  
         # The SMILES string is the second element of the list made of split line
         smiles = line.strip().split(',')[1]
-        test_smiles.append(smiles)
+        cleaned_smiles = smiles.strip('"')
+        test_smiles.append(cleaned_smiles)
         
     return test_smiles, train_smiles, train_can_bind, train_cant_bind
+
+test, train_total, traincan, traincant = extract_data('Book1.csv', 'Book2Train.csv')
+print(train_total)

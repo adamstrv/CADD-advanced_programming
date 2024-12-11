@@ -1,0 +1,8 @@
+﻿"Unique_ID,""SMILES_canonical"""
+"1,""COc1cccc(C(=O)N2CCCC(CCC(=O)NCc3ccc(F)c(F)c3)C2)c1"""
+"2,""OCc1ccc2c(CN3CCN(c4ccc(Cl)cc4)CC3)cnn2c1"""
+"3,""CCN1CCc2c(sc(NC(=O)COc3ccccc3)c2C(=O)OC)C1"""
+"4,""C1=C(c2ccccc2)CCN(Cc2cn(-c3ccccc3)nn2)C1"""
+"5,""O=C(CNS(=O)(=O)c1ccc2ccccc2c1)OCc1csc(-c2ccccc2)n1"""
+"6,""O=C(CN1C(=O)SC(=Cc2ccc(F)cc2)C1=O)Nc1cccc(S(=O)(=O)NCc2ccco2)c1"""
+"7,""CCCN(CCC)C1CCn2c(C)ccc2C1"""
