@@ -6,6 +6,9 @@ def extract_data(test_csv_path, train_csv_path):
     and creates a dictionary in which data is catagorized based on the characteristic if a SMILES string 
     can or can't bind to the dopamine receptor DRD3 for the training data. It only extract values from the 
     columns for the test data.
+    Output: The function returns four things, a list of SMILES strings for the test set, a dictionary with all
+    values for the training data, a separate dictionary for only strings that CAN bind, and a separate dictionary 
+    of the strings that CAN'T bind with the DRD3 dopamine receptor.
     """
     
     # Make empty dictionary for train SMILES
