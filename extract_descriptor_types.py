@@ -55,5 +55,5 @@ def extract_descriptor_types(smiles_strings):
 
 
 
-test_smiles, train_smiles, train_can_bind, train_cant_bind = extract_data('Book1.csv', 'train.csv')
+test_smiles, train_smiles, train_can_bind, train_cant_bind = extract_data('shortertest.csv', 'shortertrain.csv')
 extract_descriptor_types(test_smiles)

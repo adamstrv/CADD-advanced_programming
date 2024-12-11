@@ -57,6 +57,3 @@ def extract_data(test_csv_path, train_csv_path):
         test_smiles.append(cleaned_smiles)
         
     return test_smiles, train_smiles, train_can_bind, train_cant_bind
-
-test, train_total, traincan, traincant = extract_data('Book1.csv', 'Book2Train.csv')
-print(train_total)
