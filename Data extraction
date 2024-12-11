@@ -1,0 +1,15 @@
+import openpyxl
+
+train = (r'train.xlsx')
+wb_train = openpyxl.load_workbook(train)
+ws_train = wb_train.active
+x_train = [ws_train.cell(row=i,column=1).value for i in range(2,ws_train.max_row)]
+y_train = [ws_train.cell(row=i,column=2).value for i in range(2,ws_train.max_row)]
+train_data = dict(zip(x_train, y_train))
+train_can_bind = {k: v for k, v in train_data.items() if v == 1}
+train_cant_bind = {k: v for k, v in train_data.items() if v == 0}
+
+test = (r"test.xlsx")
+wb_test = openpyxl.load_workbook(test)
+ws_test = wb_test.active
+x_test = [ws_test.cell(row=i,column=2).value for i in range(2,ws_test.max_row)]
