@@ -5,17 +5,24 @@ import openpyxl
 import matplotlib.pyplot as plt
 
 # Importing data
-features = 'features'    # Change to the dataset with the features
-dataset = r'train.xlsx'
-wb_train = openpyxl.load_workbook(train)
-ws_train = wb_train.active
-y_train = [ws_train.cell(row=i,column=2).value for i in range(2,ws_train.max_row)]
+#features = 'features'    # Change to the dataset with the features
+#dataset = 'train.xlsx'
+#wb_train = openpyxl.load_workbook(train)
+#ws_train = wb_train.active
+#y_train = [ws_train.cell(row=i,column=2).value for i in range(2,ws_train.max_row)]
+
+
+
+
+
 
 # Cross-validation
 '''This section can be used to determine the number of components that
 should be used for the PCA. The number of components that maximizes
 performance, in this case accuracy, should be selected.''' 
 'https://scikit-learn.org/1.5/modules/cross_validation.html'
+
+
 pca = PCA(n_components=1)  # Initial number of components
 scores = []
 for n in range(1, pca.n_components_ + 1):
@@ -28,6 +35,10 @@ plt.plot(range(1, pca.n_components_ + 1), scores)
 plt.xlabel('Number of Components')
 plt.ylabel('Cross-Validated Accuracy')
 plt.show()
+
+
+
+
 
 # PCA
 'https://scikit-learn.org/1.5/modules/generated/sklearn.decomposition.PCA.html'

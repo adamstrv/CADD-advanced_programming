@@ -53,5 +53,7 @@ def extract_descriptor_types(smiles_strings):
     df.to_excel('Descriptor_analysis.xlsx', sheet_name='descriptor_results', index=True)
     return descriptors
 
-test_smiles, train_smiles, train_can_bind, train_cant_bind = extract_data('shortertest.csv', 'shortertrain.csv')
+
+
+test_smiles = extract_data('test.csv', 'train.csv')[0]
 extract_descriptor_types(test_smiles)
