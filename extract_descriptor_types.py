@@ -1,5 +1,4 @@
 # Extract descriptor types for SMILES strings
-
 from rdkit import Chem
 from rdkit.Chem import Descriptors
 import pandas as pd
@@ -18,9 +17,10 @@ def extract_descriptor_types(smiles_strings):
     Returns an excel sheet of the dataframe containing the values of the descriptor types for all molecules. 
     !!! The index represents the 'Unique_ID' of the SMILES strings !!!
     """
+
     # Make empty list for descriptors
     descriptors = []
-      
+
     # Make case for test set: it is just a list input
     if isinstance(smiles_strings, list):
         for smiles in smiles_strings:
@@ -29,7 +29,7 @@ def extract_descriptor_types(smiles_strings):
             descriptor = Descriptors.CalcMolDescriptors(mol) 
             # Add to descriptor list, includes dictionary for each molecule
             descriptors.append(descriptor)
-    
+
     # Make case for training set: dictionary input
     elif isinstance(smiles_strings, dict):
         # Iterate over SMILES in dictionary and make list of descriptor types
@@ -39,7 +39,7 @@ def extract_descriptor_types(smiles_strings):
             descriptor = Descriptors.CalcMolDescriptors(mol)
             # Add to descriptor list, includes dictionary for each molecule
             descriptors.append(descriptor)
-        
+    
     else:
         raise TypeError("Input has to be either a list or dictionary (with the keys being the SMILES string).")
     
@@ -52,8 +52,6 @@ def extract_descriptor_types(smiles_strings):
     # Return results in excel file
     df.to_excel('Descriptor_analysis.xlsx', sheet_name='descriptor_results', index=True)
     return descriptors
-
-
 
 test_smiles, train_smiles, train_can_bind, train_cant_bind = extract_data('shortertest.csv', 'shortertrain.csv')
 extract_descriptor_types(test_smiles)
