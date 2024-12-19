@@ -1,4 +1,5 @@
 # Function which extracts data from given .csv files
+import pandas as pd
 
 def extract_train_smiles(train_csv_path):
     """
