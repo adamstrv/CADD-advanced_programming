@@ -1,23 +1,11 @@
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
+
 from data_extraction import extract_train_smiles
 from extract_descriptor_types import extract_descriptor_types
 
-train_smiles = extract_train_smiles('train.csv')                # Importing data
-descriptor_frame = extract_descriptor_types(train_smiles)
-
-Y = descriptor_frame['classification'].values
-X = descriptor_frame.drop('classification', axis = 'columns').values
-
-
-X = StandardScaler().fit_transform(X)
-
-
-
-def dimensionality_reduction(X, variance = 0.95):
+def custom_pca_fit(X, variance = 0.95):
     number_components = 1
     explained_variance = []
 
@@ -35,6 +23,6 @@ def dimensionality_reduction(X, variance = 0.95):
         explained_variance = pca.explained_variance_ratio_
         print('n_components: ',number_components, 'total variance: ', sum(explained_variance))
 
-    print('we have ', len(explained_variance), ' principal component to cover >95% variance')
+    print('We have', len(explained_variance), '- principal component to cover >95% variance')
 
-    return principalDf
+    return principalDf, pca
