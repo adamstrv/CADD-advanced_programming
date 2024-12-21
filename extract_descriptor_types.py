@@ -37,5 +37,3 @@ def extract_descriptor_types(smiles_strings):
         raise TypeError("Input has to be either a list or dictionary (with the keys being the SMILES string).")
 
     return data_frame
-
-

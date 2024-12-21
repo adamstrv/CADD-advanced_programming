@@ -1,16 +1,6 @@
-import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from data_extraction import extract_train_smiles
-from torch.utils.data import DataLoader, TensorDataset
-import matplotlib.pyplot as plt
 import torch
 from torch import nn
-
-
-from extract_descriptor_types import extract_descriptor_types
-from PCA import custom_pca_fit
-
+import matplotlib.pyplot as plt
 
 class NN_BinClass(nn.Module):
     def __init__(self, input_size, learning_rate = 0.005, momentum = 0.95):
@@ -86,23 +76,33 @@ class NN_BinClass(nn.Module):
         return avg_loss, accuracy
     
     def training_loop(self, train_loader, val_loader, num_epochs):
-        train_losses = []
-        val_losses = []
-        val_accuracies = []
+        self.train_losses = []
+        self.val_losses = []
+        self.val_accuracies = []
 
         best_val_loss = float('inf')
 
         for epoch in range(num_epochs):
+            self.num_epochs = num_epochs
             train_loss = self.train_one_opoch(train_loader)
             val_loss, val_accuracy = self.evaluate(val_loader)
             
-            train_losses.append(train_loss)
-            val_losses.append(val_loss)
-            val_accuracies.append(val_accuracy)
+            self.train_losses.append(train_loss)
+            self.val_losses.append(val_loss)
+            self.val_accuracies.append(val_accuracy)
             
             # Check for the best validation loss
             if val_loss < best_val_loss:
                 best_val_loss = val_loss
-                # Save the model
                 torch.save(self.state_dict(), 'best_model.pth')
                 print(f'New best model saved at epoch {epoch+1} with validation loss {val_loss:.4f}')
+    
+    def show_loss_curves(self):
+        plt.figure(figsize=(8, 6))
+        plt.plot(range(1, self.num_epochs+1), self.train_losses, label='Training Loss')
+        plt.plot(range(1, self.num_epochs+1), self.val_losses, label='Validation Loss')
+        plt.xlabel('Epoch')
+        plt.ylabel('Loss')
+        plt.title('Training and Validation Loss Curves')
+        plt.legend()
+        plt.show()
