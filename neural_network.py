@@ -106,3 +106,13 @@ class NN_BinClass(nn.Module):
         plt.title('Training and Validation Loss Curves')
         plt.legend()
         plt.show()
+    
+    def predict(self,X):
+        output = self.forward(X)
+        predictions = []
+        for i in range(len(output)):
+            if output[i] > 0.5:
+                predictions.append(1)
+            else:
+                predictions.append(0)
+        return predictions

@@ -32,11 +32,12 @@ def extract_test_smiles(test_csv_path):
     test_lines = test_file.readlines()
     test_file.close()
 
-    test_smiles = []                                        # Make empty list for train SMILES
+    test_smiles = {}                                        # Make empty list for train SMILES
     
     for line in test_lines[1:]:                             # Iterate thourgh test lines: Skip the first line (header) 
-        smiles = line.strip().split(',')[1]
-        cleaned_smiles = smiles.strip('"')
-        test_smiles.append(cleaned_smiles)
+        ID, smile = line.strip().split(',')
+        cleaned_smile = smile.strip('"')
+        cleaned_ID = ID.strip('"')
+        test_smiles[cleaned_ID] = cleaned_smile
 
     return test_smiles
