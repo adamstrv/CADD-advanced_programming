@@ -20,7 +20,7 @@ reduced_X_frame = pca.transform_frame(X)
 X_test = torch.tensor(reduced_X_frame.values, dtype=torch.float32)
 Y_pred = trained_model.predict(X_test)
 
-with open("Submission_file_group1.csv", mode='w', newline="") as csvfile:
+with open("Submission_file_v2_group1.csv", mode='w', newline="") as csvfile:
     fieldnames = ['Unique_ID', 'target_feature']
     writer = csv.DictWriter(csvfile, fieldnames = fieldnames)
     writer.writeheader()
