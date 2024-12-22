@@ -37,5 +37,5 @@ if __name__ == "__main__":
     num_features = X_train.shape[1]
 
     model = NN_BinClass(num_features)
-    model.training_loop(train_loader, val_loader, num_epochs=150)
+    model.training_loop(train_loader, val_loader, num_epochs=300)
     model.show_loss_curves()

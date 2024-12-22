@@ -7,9 +7,9 @@ class NN_BinClass(nn.Module):
         super(NN_BinClass, self).__init__()
 
         self.linear1 = nn.Linear(input_size, round(input_size/2))
-        self.sigmoid1 = nn.Sigmoid() 
-        self.linear2 = nn.Linear(round(input_size/2), round(input_size/4))        
-        self.sigmoid2 = nn.Sigmoid()       
+        self.sigmoid1 = nn.Sigmoid()
+        self.linear2 = nn.Linear(round(input_size/2), round(input_size/4))
+        self.sigmoid2 = nn.Sigmoid()     
         self.output = nn.Linear(round(input_size/4), 1)
         self.sigmoid = nn.Sigmoid()
 
@@ -25,15 +25,17 @@ class NN_BinClass(nn.Module):
         x = self.linear1(x)
         x = self.sigmoid1(x)
         x = self.dropout(x)
+
         x = self.linear2(x)
         x = self.sigmoid2(x)
+
         x = self.dropout(x)
         x = self.output(x)
         out = self.sigmoid(x)
         
         return out
 
-    def train_one_opoch(self, loader, learning_rate= 0.05, momentum = 0.95):
+    def train_one_opoch(self, loader, learning_rate= 0.005, momentum = 0.95):
         self.lr = learning_rate
         self.momentum = momentum
         self.train()
@@ -94,7 +96,7 @@ class NN_BinClass(nn.Module):
             # Check for the best validation loss
             if val_loss < best_val_loss:
                 best_val_loss = val_loss
-                torch.save(self.state_dict(), 'best_model.pth')
+                torch.save(self.state_dict(), 'best_model_v2.pth')
                 print(f'New best model saved at epoch {epoch+1} with validation loss {val_loss:.4f}')
     
     def show_loss_curves(self):
