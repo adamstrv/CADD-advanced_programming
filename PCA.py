@@ -1,7 +1,5 @@
 from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
 import pandas as pd
-
 
 class custom_PCA(PCA):
     def __init__(self, X, variance = 0.95):

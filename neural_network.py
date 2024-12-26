@@ -3,7 +3,12 @@ from torch import nn
 import matplotlib.pyplot as plt
 
 class NN_BinClass(nn.Module):
-    def __init__(self, input_size, learning_rate = 0.005, momentum = 0.95):
+    """
+    class representing a neural network used for binary classification. When defining the network, you define the
+    input size, the amount of neurons in the first layer, the learning rate, and the momentum. The model is structured
+    like a funnel: every layer, the amount of neurons half.
+    """
+    def __init__(self, input_size, learning_rate = 0.005, momentum = 0.95 ):
         super(NN_BinClass, self).__init__()
 
         self.linear1 = nn.Linear(input_size, round(input_size/2))
@@ -21,6 +26,7 @@ class NN_BinClass(nn.Module):
         self.criterion = nn.BCELoss()
         self.optimizer = torch.optim.SGD(self.parameters(), self.lr , self.momentum)
 
+
     def forward(self, x):   
         x = self.linear1(x)
         x = self.sigmoid1(x)
@@ -35,9 +41,7 @@ class NN_BinClass(nn.Module):
         
         return out
 
-    def train_one_opoch(self, loader, learning_rate= 0.005, momentum = 0.95):
-        self.lr = learning_rate
-        self.momentum = momentum
+    def train_one_opoch(self, loader):
         self.train()
         running_loss = 0.0
         for batch in loader:
@@ -77,7 +81,7 @@ class NN_BinClass(nn.Module):
         avg_loss = running_loss / len(loader)
         return avg_loss, accuracy
     
-    def training_loop(self, train_loader, val_loader, num_epochs):
+    def training_loop(self, train_loader, val_loader, num_epochs, filename):
         self.train_losses = []
         self.val_losses = []
         self.val_accuracies = []
@@ -96,7 +100,8 @@ class NN_BinClass(nn.Module):
             # Check for the best validation loss
             if val_loss < best_val_loss:
                 best_val_loss = val_loss
-                torch.save(self.state_dict(), 'best_model_v2.pth')
+                self.best_val_loss = best_val_loss
+                torch.save(self.state_dict(), filename)
                 print(f'New best model saved at epoch {epoch+1} with validation loss {val_loss:.4f}')
     
     def show_loss_curves(self):
