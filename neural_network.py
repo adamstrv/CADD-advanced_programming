@@ -8,17 +8,20 @@ class NN_BinClass(nn.Module):
     input size, the amount of neurons in the first layer, the learning rate, and the momentum. The model is structured
     like a funnel: every layer, the amount of neurons half.
     """
-    def __init__(self, input_size, learning_rate = 0.005, momentum = 0.95 ):
+    def __init__(self, input_size, first_layer_size, dropout = 0.3, learning_rate = 0.005, momentum = 0.95):
+        """
+        Define the model and set the input size, size of the first layer, the amount of dropout, the learning rate, and the momentum
+        """
         super(NN_BinClass, self).__init__()
 
-        self.linear1 = nn.Linear(input_size, round(input_size/2))
+        self.linear1 = nn.Linear(input_size, round(first_layer_size))
         self.sigmoid1 = nn.Sigmoid()
-        self.linear2 = nn.Linear(round(input_size/2), round(input_size/4))
+        self.linear2 = nn.Linear(round(first_layer_size), round(first_layer_size/2))
         self.sigmoid2 = nn.Sigmoid()     
-        self.output = nn.Linear(round(input_size/4), 1)
+        self.output = nn.Linear(round(first_layer_size/2), 1)
         self.sigmoid = nn.Sigmoid()
 
-        self.dropout = nn.Dropout(p=0.4)
+        self.dropout = nn.Dropout(dropout)
 
         self.lr = learning_rate
         self.momentum = momentum
@@ -27,7 +30,10 @@ class NN_BinClass(nn.Module):
         self.optimizer = torch.optim.SGD(self.parameters(), self.lr , self.momentum)
 
 
-    def forward(self, x):   
+    def forward(self, x):
+        """
+        This runs the model in a straightforward way, calculating an output for a certain input array.
+        """
         x = self.linear1(x)
         x = self.sigmoid1(x)
         x = self.dropout(x)

@@ -34,9 +34,13 @@ if __name__ == "__main__":
 
     num_features = X_train.shape[1]
 
-    model = NN_BinClass(num_features, learning_rate=0.005, momentum= 0.95, filename= 'best_model_v3.pth')
-    model.training_loop(train_loader, val_loader, num_epochs=300)
+    best_loss = 1000
+
+    while best_loss > 0.06:
+        model = NN_BinClass(num_features, first_layer_size= 40)
+        model.training_loop(train_loader, val_loader, num_epochs=300, filename= 'best_model_v4.pth')
+        best_loss = model.best_val_loss
 
 
-trained_model = NN_BinClass(80)
-trained_model.load_state_dict(torch.load('best_model_v3.pth',weights_only=True))
+trained_model = NN_BinClass(80, 40)
+trained_model.load_state_dict(torch.load('best_model_v4.pth',weights_only=True))

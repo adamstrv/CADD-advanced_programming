@@ -6,7 +6,8 @@ import pandas as pd
 def extract_train_smiles(train_csv_path):
     """
     Function that extract the smiles with their classification from a .csv file
-    it returns a dictonary with a smile strings and their classifications
+    it returns a dictonary with the smile string as key and and the classification
+    as value.
     """
 
     train_file = open(train_csv_path)                       # Open and read file
@@ -27,7 +28,7 @@ def extract_train_smiles(train_csv_path):
 def extract_test_smiles(test_csv_path):
     """
     Function that extract the smiles with their classification from a .csv file
-    it returns a list with a smile strings
+    it returns a dictonary with a the ID as key and a smile as the value.
     """
 
     test_file = open(test_csv_path)                         # Open and read file
@@ -99,7 +100,7 @@ def test_descriptor_frame(smiles_strings):
     return data_frame
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":                                      #  only if the file is run directly
     train_smiles = extract_train_smiles('train.csv')
     train_frame = train_descriptor_frame(train_smiles)
     train_frame.to_csv('training_dataframe.csv')
