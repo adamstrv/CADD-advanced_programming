@@ -24,7 +24,7 @@ X_test = torch.tensor(reduced_X_frame.values, dtype=torch.float32)
 
 Y_pred = trained_model.predict(X_test)                                                   #  Use the model to predict an output
 
-with open("Submission_file_v3_group1.csv", mode='w', newline="") as csvfile:             #  Write the results to a csv. file
+with open("submission_files\Submission_file_v4_group1.csv", mode='w', newline="") as csvfile:             #  Write the results to a csv. file
     fieldnames = ['Unique_ID', 'target_feature']
     writer = csv.DictWriter(csvfile, fieldnames = fieldnames)
     writer.writeheader()

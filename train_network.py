@@ -36,11 +36,10 @@ if __name__ == "__main__":
 
     best_loss = 1000
 
-    while best_loss > 0.06:
-        model = NN_BinClass(num_features, first_layer_size= 40)
-        model.training_loop(train_loader, val_loader, num_epochs=300, filename= 'best_model_v4.pth')
-        best_loss = model.best_val_loss
+    model = NN_BinClass(num_features, first_layer_size= 40)
+    model.training_loop(train_loader, val_loader, num_epochs=300, filename= "saved_model_v5.csv")
+    best_loss = model.best_val_loss
 
 
 trained_model = NN_BinClass(80, 40)
-trained_model.load_state_dict(torch.load('best_model_v4.pth',weights_only=True))
+trained_model.load_state_dict(torch.load("saved_model_v5.csv", weights_only=True))
