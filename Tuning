@@ -1,11 +1,18 @@
+from train_network import model
+import pandas as pd
+
 "https://machinelearningmastery.com/how-to-grid-search-hyperparameters-for-pytorch-models/"
 from sklearn.model_selection import GridSearchCV
+
+train_frame = pd.read_csv('training_dataframe.csv')
+Y = train_frame['classification']                                                                        #   Define Y with the classification
+X = train_frame.drop('classification', axis = 'columns').drop('Unnamed: 0', axis='columns')
 
 param_grid = {
     'batch_size': [10, 20, 40, 60, 80, 100],
     'max_epochs': [10, 50, 100]
 }
-grid = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=-1, cv=3)
+grid = GridSearchCV(estimator= model, param_grid=param_grid, n_jobs=-1, cv=3)
 grid_result = grid.fit(X, Y)
 
 print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
