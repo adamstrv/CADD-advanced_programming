@@ -20,9 +20,10 @@ pca = custom_PCA(X)                                                             
 reduced_X_frame = pca.transform_frame(X)
 
 
+X_tensor = torch.tensor(reduced_X_frame.values, dtype=torch.float32)
+Y_tensor = torch.tensor(Y.values, dtype=torch.float32)
+
 if __name__ == "__main__":
-    X_tensor = torch.tensor(reduced_X_frame.values, dtype=torch.float32)
-    Y_tensor = torch.tensor(Y.values, dtype=torch.float32)
 
     X_train, X_val, Y_train, Y_val = train_test_split(X_tensor, Y_tensor, test_size=0.2)          # Define test and training data
 
