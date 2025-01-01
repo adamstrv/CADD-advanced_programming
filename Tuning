@@ -22,10 +22,9 @@ model = NeuralNetClassifier(
 )
 
 param_grid = {
-   # 'batch_size': [8, 16, 32, 64, 128, 256],
+    'batch_size': [8, 16, 32, 64, 128, 256],
     'max_epochs': [10, 50, 100, 300, 500]
 }
-
 
 grid = GridSearchCV(estimator= model, param_grid = param_grid, n_jobs=-1, cv=3)
 
