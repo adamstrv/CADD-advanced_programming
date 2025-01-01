@@ -9,8 +9,6 @@ from sklearn.model_selection import GridSearchCV
 from train_network import X_tensor
 from train_network import Y_tensor
 
-X_tensor.flatten()
-
 model = NeuralNetClassifier(
     NN_BinClass,
     max_epochs=150,
