@@ -4,7 +4,7 @@ from torch.utils.data import DataLoader, TensorDataset
 
 import torch
 from PCA import custom_PCA
-from neural_network import NN_BinClass
+from neural_network_V1 import NN_BinClass
 
 import pandas as pd
 
@@ -19,9 +19,9 @@ X = scaler.transform(X)
 pca = custom_PCA(X)                                                               #   Define a 'dimensionality-reduced' X and save the pca for new variables
 reduced_X_frame = pca.transform_frame(X)
 
-
 X_tensor = torch.tensor(reduced_X_frame.values, dtype=torch.float32)
 Y_tensor = torch.tensor(Y.values, dtype=torch.float32)
+
 
 if __name__ == "__main__":
 
