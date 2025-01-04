@@ -6,7 +6,7 @@ from train_network import pca
 from train_network import trained_model
 
 
-train_frame = pd.read_csv("datasets/training_dataframe.csv")
+train_frame = pd.read_csv("training_dataframe.csv")
 
 Y = train_frame['classification'].tolist()                                                           #   Define Y with the classification
 X = train_frame.drop('classification', axis = 'columns').drop('Unnamed: 0', axis='columns')          #   Define X with all the features

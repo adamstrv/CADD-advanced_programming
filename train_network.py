@@ -4,7 +4,7 @@ from torch.utils.data import DataLoader, TensorDataset
 
 import torch
 from PCA import custom_PCA
-from neural_network_V1 import NN_BinClass
+from neural_network_V2 import NN_BinClass
 
 import pandas as pd
 
@@ -35,10 +35,11 @@ if __name__ == "__main__":
 
     num_features = X_train.shape[1]
 
-    model = NN_BinClass(num_features, first_layer_size= 40)
+    model = NN_BinClass(input_size=num_features)
 
-    model.training_loop(train_loader, val_loader, num_epochs=300, filename= "saved_model_v5.pth")
+    model.training_loop(train_loader, val_loader, num_epochs=500, filename= "saved_model_v6.pth")
     best_loss = model.best_val_loss
+    model.show_loss_curves()
 
-trained_model = NN_BinClass(80, 40)
-trained_model.load_state_dict(torch.load("saved_model_v4.pth", weights_only=True))
+trained_model = NN_BinClass()
+trained_model.load_state_dict(torch.load("saved_model_v6.pth", weights_only=True))
