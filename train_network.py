@@ -37,7 +37,7 @@ if __name__ == "__main__":
 
     model = NN_BinClass(input_size=num_features)
 
-    model.training_loop(train_loader, val_loader, num_epochs=100, filename= "saved_model_v8.pth")
+    model.training_loop(train_loader, val_loader, num_epochs=500, filename= "saved_model_v8.pth")
     best_loss = model.best_val_loss
     model.show_loss_curves()
 

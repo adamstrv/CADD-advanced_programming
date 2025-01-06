@@ -1,18 +1,27 @@
 import torch
 import torch.nn as nn
-from skorch import NeuralNetClassifier
-import matplotlib.pyplot as plt
+"""
+Defines the class NN_BinClass, which is a neural network for binary classification.
+"""
 
-
-# this is just a modded model from a website, i'll merge it toghether with my old model later
 class NN_BinClass(nn.Module):
-    def __init__(self, activation = nn.Softsign, input_size = 80 , n_layers=2, n_neurons = 10, neuron_reduction = 1.0, dropout_rate = 0.7, learning_rate = 0.01, momentum = 0.6 ):
+    """
+    Defines the class NN_BinClass, which is a neural network for binary classification, with complete freedom to shape the model when initializing a model.
+    When initializing the model, you can define the activation function, input size, the numer of layers, the number of neurons in the first layer, the reduction of
+    neurons through the model (example: n_neurons = 20 and neuron reduction = 0.5, the first layer has 20 neurons, the second = 10, the third = 5, etc.), the dropout rate,
+    the learning rate and the momentum of the gradient descent.
+
+    With the training loop, you train the model using the training data, and save the best model then evaluating on the evaluation data, which it split beforehand.
+
+    With the predict function, you predict the class of a new set of molecules
+    """
+    def __init__(self, activation = nn.Softsign, input_size = 80 , n_layers=2, n_neurons = 10, neuron_reduction = 1.0, dropout_rate = 0.7, learning_rate = 0.01, momentum = 0.6):
         super().__init__()
         self.layers = []
         self.acts = []
         self.dropout = []
 
-        for i in range(n_layers):
+        for i in range(n_layers):                                                       #   add a layer of the amount of layers
             self.layers.append(nn.Linear(input_size, n_neurons))
             self.acts.append(activation())
             self.dropout.append(nn.Dropout(dropout_rate))
@@ -23,8 +32,6 @@ class NN_BinClass(nn.Module):
         self.linear_out = nn.Linear(n_neurons, 1)
         self.sigmoid = nn.Sigmoid()
     
-        
-        self.dropout = nn.Dropout(dropout_rate)
 
         self.lr = learning_rate
         self.momentum = momentum
@@ -33,6 +40,9 @@ class NN_BinClass(nn.Module):
         self.optimizer = torch.optim.SGD(self.parameters(), self.lr , self.momentum)
 
     def forward(self, x):
+        """
+        Just run the model forward, use the predictors of X to calculate an output.
+        """
         for layer, act in zip(self.layers, self.acts):
             x = act(layer(x))
         x = self.linear_out(x)
@@ -41,6 +51,9 @@ class NN_BinClass(nn.Module):
 
 
     def train_one_opoch(self, loader):
+        """
+        Train the model for one epoch, later to be used in the training loop.
+        """
         self.train()
         running_loss = 0.0
         for batch in loader:
@@ -58,6 +71,9 @@ class NN_BinClass(nn.Module):
     
 
     def evaluate(self, loader):
+        """
+        Evaluate the current model, return the average loss and the accuracy of the model given a set of test inputs.
+        """
         self.eval()
         running_loss = 0.0
         correct = 0
@@ -71,7 +87,6 @@ class NN_BinClass(nn.Module):
                 loss = self.criterion(outputs, Y)
                 
                 running_loss += loss.item()            
-                # apply threshold to get binary predictions
                 predicted = (outputs > 0.5).float()  
                 total += Y.size(0)
                 correct += (predicted == Y).sum().item()
@@ -80,7 +95,10 @@ class NN_BinClass(nn.Module):
         avg_loss = running_loss / len(loader)
         return avg_loss, accuracy
     
-    def training_loop(self, train_loader, val_loader, num_epochs, filename):
+    def train(self, train_loader, val_loader, num_epochs, filename):
+        """
+        The loop that traines the model on the training and validation loader for the number of epochs, and saves the best model to a file.
+        """
         self.train_losses = []
         self.val_losses = []
         self.val_accuracies = []
@@ -96,24 +114,16 @@ class NN_BinClass(nn.Module):
             self.val_losses.append(val_loss)
             self.val_accuracies.append(val_accuracy)
             
-            # Check for the best validation loss
             if val_loss < best_val_loss:
                 best_val_loss = val_loss
                 self.best_val_loss = best_val_loss
                 torch.save(self.state_dict(), filename)
                 print(f'New best model saved at epoch {epoch+1} with validation loss {val_loss:.4f}')
     
-    def show_loss_curves(self):
-        plt.figure(figsize=(8, 6))
-        plt.plot(range(1, self.num_epochs+1), self.train_losses, label='Training Loss')
-        plt.plot(range(1, self.num_epochs+1), self.val_losses, label='Validation Loss')
-        plt.xlabel('Epoch')
-        plt.ylabel('Loss')
-        plt.title('Training and Validation Loss Curves')
-        plt.legend()
-        plt.show()
-    
     def predict(self,X):
+        """
+        use the model to make predictions for new observations.
+        """
         output = self.forward(X)
         predictions = []
         for i in range(len(output)):
