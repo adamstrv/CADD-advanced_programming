@@ -3,9 +3,11 @@
 ModelMed Inc.
 Victor Baas, Julia Boellaard, Bram Hormann, and Adam Stravers
 
+
 *** Description of this repo ***
 
 ModelMed Inc's Github repo for the CADD assignment for 8BA103 Project: Advanced programming & biomedical analysis. This repo contains all the files needed to create and use a neural network to predict whether a molecule, in SMILE format, is able to bind to DRD3.
+
 
 *** Organization of this media ***
 
